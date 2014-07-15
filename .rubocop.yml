@@ -1,0 +1,23 @@
+AllCops:
+  Includes:
+    - Rakefile
+  Excludes:
+    - doc/**
+    - tmp/**
+
+
+# Limit lines to 119 characters.
+LineLength:
+  Max: 119
+
+# Avoid methods longer than 30 lines of code
+MethodLength:
+  Max: 30
+
+# Allow Ruby 1.8 hash rocket syntax
+HashSyntax:
+  Enabled: false
+
+# Document classes and non-namespace modules.
+Documentation:
+  Enabled: false

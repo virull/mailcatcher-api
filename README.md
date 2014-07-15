@@ -52,7 +52,7 @@ expect(last_response.status).to be 200
     mailbox.find(<attr>: //)
     ```
 
-    Where <attr> could be
+    Where `attr` could be
     * from
     * to
     * subject

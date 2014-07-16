@@ -12,7 +12,7 @@ gem 'mailcatcher-api', '0.0.1'
 
 ## Configuration
 
-If you run MailCatcher on localhost using its default 1080 port, then you can skip this configuration block
+If you run MailCatcher on localhost using its default 1080 port, then you can skip configuration block
 
 ```ruby
 # spec/spec_helper.rb

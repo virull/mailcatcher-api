@@ -25,6 +25,8 @@ end
 ```
 ## Usage
 
+#### Integration / acceptance tests
+
 ```ruby
 mailbox = MailCatcher::API::Mailbox.new
 expect(mailbox.count).to be >= 1
@@ -39,6 +41,28 @@ confirmation_code = confirmation_link.split('/').last
 
 post '/api/account/confirm.json', JSON.dump('confirmation_token' => confirmation_code)
 expect(last_response.status).to be 200
+```
+
+#### Available email attributes
+
+```ruby
+mailbox = MailCatcher::API::Mailbox.new
+email = mailbox.messages.first
+
+email.raw
+email.message_id
+email.date
+
+email.from
+email.to
+email.subject
+email.body
+
+email.mime_type
+emai.charset
+emai.content_type
+
+emai.links
 ```
 
 ## TODO

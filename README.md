@@ -7,7 +7,7 @@
 ```ruby
 # Gemfile
 
-gem 'mailcatcher-api'
+gem 'mailcatcher-api', '0.0.1'
 ```
 
 ## Configuration

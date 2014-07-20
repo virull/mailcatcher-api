@@ -14,6 +14,7 @@ describe MailCatcher::API::Mailbox do
 
     describe '#messages' do
       it 'without reload' do
+        expect(mailbox.messages.count).to be @mailbox_size
         mailbox.messages.each do |msg|
           expect(msg).to be_an_instance_of(MailCatcher::API::Mailbox::Message)
         end
@@ -24,7 +25,13 @@ describe MailCatcher::API::Mailbox do
       end
 
       it 'with reload' do
-        skip
+        old_mailbox_size = @mailbox_size
+        expect(mailbox.messages.count).to be old_mailbox_size
+        unstub_mailbox
+        new_mailbox_size = old_mailbox_size + 1
+        stub_mailbox(new_mailbox_size)
+        expect(mailbox.messages.count).to be old_mailbox_size
+        expect(mailbox.messages(reload: true).count).to be new_mailbox_size
       end
     end
 

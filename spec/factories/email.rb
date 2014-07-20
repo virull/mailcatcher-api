@@ -32,7 +32,7 @@ FactoryGirl.define do
     }
 
 
-    raw {
+    source {
       %Q(
 Date: #{date_raw}
 From: #{from.join(', ')}

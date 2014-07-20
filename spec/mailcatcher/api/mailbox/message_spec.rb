@@ -28,9 +28,9 @@ describe MailCatcher::API::Mailbox::Message do
 
   it 'initializable' do
     email = FactoryGirl.attributes_for(:email)
-    msg = msg_class.new(email[:raw])
+    msg = msg_class.new(email[:source])
 
-    expect(msg.raw).to eq(email[:raw])
+    expect(msg.raw).to eq(email[:source])
     expect(msg.message_id).to eq(email[:message_id])
     expect(msg.date).to eq(email[:date])
 

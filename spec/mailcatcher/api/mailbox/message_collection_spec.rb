@@ -18,6 +18,6 @@ describe MailCatcher::API::Mailbox::MessageCollection do
   end
 
   it 'count' do
-    skip
+    expect(mailbox.messages.count).to be @mailbox_size
   end
 end

@@ -17,9 +17,8 @@ describe MailCatcher::API::Mailbox do
         mailbox.messages.each do |msg|
           expect(msg).to be_an_instance_of(MailCatcher::API::Mailbox::Message)
         end
-
         assert_requested(:get, "#{mailbox_server}/messages", times: 1)
-        mailbox_email_index.each do |item|
+        @mailbox_email_index.each do |item|
           assert_requested(:get, "#{mailbox_server}/messages/#{item['id']}.json", times: 1)
         end
       end
@@ -30,7 +29,7 @@ describe MailCatcher::API::Mailbox do
     end
 
     it '#count' do
-      expect(mailbox.messages.count).to be mailbox_size
+      expect(mailbox.messages.count).to be @mailbox_size
     end
   end
 end

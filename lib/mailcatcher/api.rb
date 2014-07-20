@@ -5,7 +5,6 @@ require 'mailcatcher/api/version'
 require 'mailcatcher/api/configuration'
 require 'mailcatcher/api/error'
 require 'mailcatcher/api/middleware/network_exceptions'
-require 'mailcatcher/api/message'
 require 'mailcatcher/api/mailbox'
 
 module MailCatcher

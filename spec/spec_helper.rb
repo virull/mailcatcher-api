@@ -16,3 +16,5 @@ FactoryGirl.find_definitions
 
 require 'webmock/minitest'
 WebMock.allow_net_connect!
+
+Dir[File.join(__dir__, 'shared/**/*.rb')].each { |f| require f }

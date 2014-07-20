@@ -11,9 +11,11 @@ describe MailCatcher::API::Middleware::NetworkExceptions do
 
   it 'error: connection timeout' do
     api_server = 'http://8.8.8.8:3000'
+    url = /#{ Regexp.quote(api_server) }.*/
     MailCatcher::API.config.server = api_server
-    @stub = stub_request(:get, /#{ Regexp.quote(api_server) }.*/).to_timeout
+    @stub = stub_request(:get, url).to_timeout
     expect { mailbox.messages }.to raise_error(MailCatcher::API::Error::Timeout)
+    assert_requested(:get, url, times: 1)
   end
 
   it 'error: connection failed' do

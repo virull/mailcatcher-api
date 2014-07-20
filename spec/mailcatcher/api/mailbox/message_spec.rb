@@ -1,13 +1,15 @@
-require_relative '../../spec_helper'
+require_relative '../../../spec_helper'
 
-describe MailCatcher::API::Message do
+describe MailCatcher::API::Mailbox::Message do
 
   def remove_carriage_chars(str)
     str.tr("\r", '').tr("\n", '')
   end
 
+  let(:msg_class) { MailCatcher::API::Mailbox::Message }
+
   it 'has attributes' do
-    msg = MailCatcher::API::Message.new('mail raw source')
+    msg = msg_class.new('mail raw source')
     expect(msg).to respond_to :raw
     expect(msg).to respond_to :message_id
     expect(msg).to respond_to :date
@@ -26,7 +28,7 @@ describe MailCatcher::API::Message do
 
   it 'initializable' do
     email = FactoryGirl.attributes_for(:email)
-    msg = MailCatcher::API::Message.new(email[:raw])
+    msg = msg_class.new(email[:raw])
 
     expect(msg.raw).to eq(email[:raw])
     expect(msg.message_id).to eq(email[:message_id])

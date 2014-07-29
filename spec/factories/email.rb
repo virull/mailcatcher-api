@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :email, class: Hash do
+    id
     message_id   '53b72e84f0168_40cf80865be8313df@admins-mbp-2.mail'
     date_raw     'Sat, 05 Jul 2014 14:45:25 +0200'
     date         { DateTime.parse(date_raw) }
@@ -48,5 +49,6 @@ Content-Transfer-Encoding: 7bit
       ).strip
     }
 
+    initialize_with { attributes.stringify_keys }
   end
 end

@@ -6,20 +6,30 @@ module MailboxSpecHelpers
       let(:mailbox) { MailCatcher::API::Mailbox.new }
 
       def stub_mailbox(message_count = 3)
+        unstub_mailbox
         @mailbox_size = message_count
 
-        @mailbox_email_index = FactoryGirl.build_list(:email_index, @mailbox_size)
+        @mailbox_email_index = FactoryGirl.build_list(:email_index, @mailbox_size).shuffle
         @stub_email_index = stub_request(:get, "#{mailbox_server}/messages")
           .to_return(status: 200, body: MultiJson.dump(@mailbox_email_index))
 
-        @mailbox_email = FactoryGirl.attributes_for(:email)
         @stub_email = stub_request(:get, /#{ Regexp.quote(mailbox_server) }\/messages\/\d+\.json/)
-          .to_return(status: 200, body: MultiJson.dump(@mailbox_email))
+          .to_return do |request|
+            {
+              status: 200,
+              body: MultiJson.dump(FactoryGirl.build(:email, id: request.uri.path[/\d+/]))
+            }
+          end
       end
 
       def unstub_mailbox
-        remove_request_stub(@stub_email_index)
-        remove_request_stub(@stub_email)
+        remove_request_stub(@stub_email_index) if @stub_email_index
+        remove_request_stub(@stub_email) if @stub_email
+
+        @mailbox_size = nil
+        @mailbox_email_index = nil
+        @stub_email_index = nil
+        @stub_email = nil
       end
     end
   end

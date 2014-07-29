@@ -17,7 +17,18 @@ describe MailCatcher::API::Mailbox::MessageCollection do
     expect(collection).to respond_to :select
   end
 
+  it 'sorted' do
+    stub_mailbox(10)
+    actual_index_ids = @mailbox_email_index.map {|msg| msg['id']}
+    mailbox_message_ids = mailbox.messages.map(&:id)
+    expect(mailbox_message_ids).not_to eql(actual_index_ids)
+    expect(mailbox_message_ids).to eql(actual_index_ids.sort.reverse)
+  end
+
   it 'count' do
-    expect(mailbox.messages.count).to be @mailbox_size
+    [4, 6].each do |num|
+      stub_mailbox(num)
+      expect(mailbox.messages(reload: true).count).to be num
+    end
   end
 end

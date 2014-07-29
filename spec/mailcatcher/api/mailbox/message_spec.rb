@@ -10,6 +10,7 @@ describe MailCatcher::API::Mailbox::Message do
 
   it 'has attributes' do
     msg = msg_class.new('mail raw source')
+    expect(msg).to respond_to :id
     expect(msg).to respond_to :raw
     expect(msg).to respond_to :message_id
     expect(msg).to respond_to :date
@@ -27,22 +28,23 @@ describe MailCatcher::API::Mailbox::Message do
   end
 
   it 'initializable' do
-    email = FactoryGirl.attributes_for(:email)
-    msg = msg_class.new(email[:source])
+    email = FactoryGirl.build(:email)
+    msg = msg_class.new(email)
 
-    expect(msg.raw).to eq(email[:source])
-    expect(msg.message_id).to eq(email[:message_id])
-    expect(msg.date).to eq(email[:date])
+    expect(msg.id).to eq(email['id'])
+    expect(msg.raw).to eq(email['source'])
+    expect(msg.message_id).to eq(email['message_id'])
+    expect(msg.date).to eq(email['date'])
 
-    expect(msg.from).to eq(email[:from])
-    expect(msg.to).to eq(email[:to])
-    expect(msg.subject).to eq(email[:subject])
-    expect(remove_carriage_chars(msg.body)).to eq(remove_carriage_chars(email[:body]))
+    expect(msg.from).to eq(email['from'])
+    expect(msg.to).to eq(email['to'])
+    expect(msg.subject).to eq(email['subject'])
+    expect(remove_carriage_chars(msg.body)).to eq(remove_carriage_chars(email['body']))
 
-    expect(msg.mime_type).to eq(email[:mime_type])
-    expect(msg.charset).to eq(email[:charset])
-    expect(msg.content_type).to eq(email[:content_type])
+    expect(msg.mime_type).to eq(email['mime_type'])
+    expect(msg.charset).to eq(email['charset'])
+    expect(msg.content_type).to eq(email['content_type'])
 
-    expect(msg.links).to eq(email[:links])
+    expect(msg.links).to eq(email['links'])
   end
 end

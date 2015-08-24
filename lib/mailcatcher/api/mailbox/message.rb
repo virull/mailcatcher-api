@@ -7,7 +7,7 @@ module MailCatcher
       class Message
         attr_reader :id, :raw
         attr_reader :message_id, :date
-        attr_reader :from, :to, :subject, :body, :decoded_body, :headers
+        attr_reader :from, :to, :subject, :body, :decoded_body
         attr_reader :mime_type, :charset, :content_type
 
         def initialize(msg)
@@ -22,7 +22,6 @@ module MailCatcher
           @subject = mail.subject
           @body = mail.body.raw_source
           @decoded_body = mail.decode_body
-          @headers = mail.headers
           @mime_type = mail.mime_type
           @charset = mail.charset
           @content_type = mail.content_type

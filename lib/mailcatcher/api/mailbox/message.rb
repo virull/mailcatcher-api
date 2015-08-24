@@ -7,7 +7,7 @@ module MailCatcher
       class Message
         attr_reader :id, :raw
         attr_reader :message_id, :date
-        attr_reader :from, :to, :subject, :body, :decoded_body
+        attr_reader :from, :to, :subject, :body, :decoded_body, :header_fields
         attr_reader :mime_type, :charset, :content_type
 
         def initialize(msg)
@@ -16,6 +16,7 @@ module MailCatcher
 
           mail = Mail.new(@raw)
           @message_id = mail.message_id
+          @header_fields = mail.header_fields
           @date = mail.date
           @from = mail.from
           @to = mail.to
@@ -29,6 +30,10 @@ module MailCatcher
 
         def links
           @links ||= URI.extract(@decoded_body).select { |s| s.start_with? 'http' }
+        end
+
+        def headers
+          @headers ||= @header_fields.inject({}) {|hsh, header| hsh[header.name] = header.value; hsh}
         end
       end
     end

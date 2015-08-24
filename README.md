@@ -31,6 +31,9 @@ end
 mailbox = MailCatcher::API::Mailbox.new
 expect(mailbox.count).to be >= 1
 
+mailbox.messages.clear!
+expect(mailbox.count).to be 0
+
 confirmation_email = mailbox.messages.first
 expect(confirmation_email.to.count).to be 1
 expect(confirmation_email.to.first).to eq('user@example.com')

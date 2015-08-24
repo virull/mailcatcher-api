@@ -19,6 +19,11 @@ module MailCatcher
           nil
         end
 
+        def clear!
+          @connection.delete("/messages")
+          nil
+        end
+
         private
 
         def collection

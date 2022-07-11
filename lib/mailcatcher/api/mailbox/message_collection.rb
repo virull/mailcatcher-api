@@ -32,7 +32,7 @@ module MailCatcher
 
         def load_collection
           collection_index.map do |msg|
-            response = connection.get("/messages/#{ msg['id'] }.json")
+            response = @connection.get("/messages/#{ msg['id'] }.json")
             json = MultiJson.load(response.body)
             json['source'] = connection.get('/messages/%d.source' % json['id']).body
             Mailbox::Message.new(json)
